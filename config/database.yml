@@ -1,0 +1,22 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+
+development:
+  <<: *default
+  database: events_app_development
+  user: dunder_mifflin
+
+test:
+  <<: *default
+  database: events_app_test
+  user: dunder_mifflin
+
+heroku_default: &heroku_default
+  <<: *default
+  url: <%= ENV['DATABASE_URL'] %>
+  pool: <%= ENV['DATABASE_POOL_SIZE'] || 10 %>
+
+production:
+  <<: *heroku_default
