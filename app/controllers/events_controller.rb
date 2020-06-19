@@ -27,7 +27,7 @@ class EventsController < ApplicationController
 
     all_post_params.each do |key, value|
       if (key == "name" || key == "event_type")
-        result[key] = key
+        result[key] = value
       else 
         # passed in params that aren't "name" or "event_type" aren't going under
         # the :event key, sort through the remainder
