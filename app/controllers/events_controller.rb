@@ -16,24 +16,16 @@ class EventsController < ApplicationController
     end
   end
 
-
-  #to accept objects without "name" and "event_type" as keys, move the other
-  #passed in params to be filed under "other_params" 
   def formatted_post_params
     result = Hash.new
     result["other_params"] = Hash.new
-
-    all_post_params = params.permit!
+    all_post_params = params.require(:event).permit!
 
     all_post_params.each do |key, value|
       if (key == "name" || key == "event_type")
         result[key] = value
-      else 
-        # passed in params that aren't "name" or "event_type" aren't going under
-        # the :event key, sort through the remainder
-        if (!["controller", "action", "event"].include? key)
-          result["other_params"][key] = value
-        end
+      else
+        result["other_params"][key] = value
       end
     end
 
