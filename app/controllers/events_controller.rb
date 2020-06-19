@@ -16,6 +16,8 @@ class EventsController < ApplicationController
     end
   end
 
+  private
+  
   def formatted_post_params
     result = Hash.new
     result["other_params"] = Hash.new
