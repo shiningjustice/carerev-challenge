@@ -6,12 +6,10 @@ default: &default
 development:
   <<: *default
   database: events_app_development
-  user: dunder_mifflin
 
 test:
   <<: *default
   database: events_app_test
-  user: dunder_mifflin
 
 heroku_default: &heroku_default
   <<: *default
