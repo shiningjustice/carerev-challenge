@@ -2,7 +2,7 @@ class EventsController < ApplicationController
   def index
     respond_to do |format|
       if !!params[:date]
-        results = Hash.new
+        @results = Hash.new
         results["todays_stats"] = Array.new
         
         queryResults = Event.select("event_type, COUNT(event_type)").where(created_at: Time.zone.now.beginning_of_day..Time.zone.now.end_of_day).group(:event_type)
@@ -10,7 +10,7 @@ class EventsController < ApplicationController
           results["todays_stats"].push({obj.event_type => obj.count})
         end
         
-        format.json { render :json => results }
+        format.json { render :json => @results }
       else 
         @events = Event.all
         format.json { render :json => @events }
