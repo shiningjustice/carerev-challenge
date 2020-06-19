@@ -48,7 +48,4 @@ class EventsController < ApplicationController
     return result
   end
 
-  # def query_string_object
-  #   request.query_parameters
-
 end
