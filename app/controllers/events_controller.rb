@@ -1,7 +1,21 @@
 class EventsController < ApplicationController
   def index
-    @events = Event.all
-    render :json => @events
+    respond_to do |format|
+      if !!params[:date]
+        results = Hash.new
+        results["todays_stats"] = Array.new
+        
+        queryResults = Event.select("event_type, COUNT(event_type)").where(created_at: Time.zone.now.beginning_of_day..Time.zone.now.end_of_day).group(:event_type)
+        queryResults.each do |obj| 
+          results["todays_stats"].push({obj.event_type => obj.count})
+        end
+        
+        format.json { render :json => results }
+      else 
+        @events = Event.all
+        format.json { render :json => @events }
+      end 
+    end
   end
   
   def create
@@ -33,5 +47,8 @@ class EventsController < ApplicationController
 
     return result
   end
+
+  # def query_string_object
+  #   request.query_parameters
 
 end
